@@ -49,7 +49,7 @@ app.use("/", serveStatic ( path.join (__dirname, '/client/dist') ) );
 
 app.get('*', function (req, res) {
     res.sendFile(__dirname + '/client/dist/index.html')
-})
+});
 
 //Index Route
 // app.get('*',(req,res)=>{
