@@ -35,7 +35,7 @@ app.use(passport.session());
 require('./config/passport')(passport);
 
 //Routes
-app.use("",link_routes);
+app.use("/",link_routes);
 
 //Mongoose connection
 mongoose.connect("mongodb://"+config.user+":"+config.pass+"@ds159400.mlab.com:59400/linkshock");
