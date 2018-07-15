@@ -39,7 +39,7 @@ export default {
     submit () {
           axios({
             method: 'post',
-            url: 'http://localhost:3000/link',
+            url: 'https://linkshockv2.herokuapp.com/link',
             data: {
               id: this.link_id,
               password: this.link_pass,

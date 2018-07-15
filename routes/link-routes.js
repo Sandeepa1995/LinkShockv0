@@ -306,4 +306,9 @@ router.post('/shock',(req,res,next)=> {
     });
 });
 
+//Add shock (new) to the database
+router.get('/welcome',(req,res,next)=> {
+    return res.json({success: true, msg:"Welcome to LinkShock Web"})
+});
+
 module.exports = router;
