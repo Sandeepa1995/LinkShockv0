@@ -16,7 +16,7 @@ const jwt=require('jsonwebtoken');
 const  port=process.env.PORT || 3000;
 
 //Config file
-const config = require('./../config.json');
+const config = require('./config.json');
 
 //CORS Middleware
 app.use(cors());
