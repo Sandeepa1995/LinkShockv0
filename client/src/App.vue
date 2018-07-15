@@ -36,14 +36,45 @@
 export default {
   data () {
     return {
-      menuItems : [
-        {icon:"router", title:"SuperLink",link:'/superlink'},
-        {icon:"person_add", title:"Register",link:'/register'},
-        {icon:"lock_open", title:"Login",link:'/login'}
-      ],
+      fixed:true,
       title: 'LinkShock'
     }
   },
-  name: 'App'
+  computed:{
+    loggable(){
+      if(localStorage.getItem("user")){
+        return true
+      }
+      else{
+        return false
+      }
+    },
+    menuItems(){
+      let menuItems = [
+        {icon:"person_add", title:"Register",link:'/register'},
+        {icon:"lock_open", title:"Login",link:'/login'}
+      ];
+      if(localStorage.getItem("user")){
+        menuItems = [
+          {icon:"router", title:"SuperLink",link:'/superlink'}
+        ]
+      }
+      return menuItems
+    }
+  },
+  name: 'App',
+  mounted(){
+    this.user=localStorage.getItem('user');
+  },
+  methods: {
+    logout(){
+      localStorage.setItem("token",null);
+      localStorage.setItem("user",null);
+      localStorage.clear();
+//        localStorage.setItem("message","User logged out");
+      this.$router.push('/');
+      location.reload();
+    }
+  }
 }
 </script>

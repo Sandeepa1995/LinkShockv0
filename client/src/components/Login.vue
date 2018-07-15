@@ -69,7 +69,7 @@ export default {
       if (this.$refs.form.validate()) {
           axios({
             method: 'post',
-            url: 'http://localhost:3000/passenger/authenticate',
+            url: 'http://localhost:3000/authenticate',
             data: {
               email: this.email,
               password: this.password

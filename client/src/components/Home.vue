@@ -4,7 +4,7 @@
       <!--<v-parallax src="/../../static/bus_img2.jpg" height="1000">-->
         <v-layout column align-center justify-center style="padding-top: 20%">
           <h1 class="white--text" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">{{ msg }}</h1>
-          <h4 class="white--text" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Be hip, and book a seat for your trip!</h4>
+          <h4 class="white--text" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Link all your electrical appliances!</h4>
         </v-layout>
         <!--<v-card style="padding: 100px">-->
           <!--<h2></h2>-->
@@ -69,7 +69,7 @@ export default {
   name: 'home',
   data () {
     return {
-      msg: 'Welcome to BookMySeat',
+      msg: 'Welcome to LinkShock',
 
 //    For bus seat management
     }
