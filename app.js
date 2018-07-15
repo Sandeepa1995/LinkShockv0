@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
+const serveStatic = require('serve-static')
 
 const mongoose = require('mongoose');
 
@@ -44,18 +45,24 @@ var db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+app.use("/", serveStatic ( path.join (__dirname, '/client/dist') ) );
+
+app.get('*', function (req, res) {
+    res.sendFile(__dirname + '/client/dist/index.html')
+})
+
 //Index Route
-app.get('*',(req,res)=>{
-    res.send({success:false, msg:"unknown request"})
-    // res.sendFile(path.join(__dirname,'public/index.html'));
-});
+// app.get('*',(req,res)=>{
+//     res.send({success:false, msg:"unknown request"})
+//     // res.sendFile(path.join(__dirname,'public/index.html'));
+// });
 //
 // app.post('/register',(req,res)=>{
 //     console.log(req.body);
 //     res.send({success:true, msg:"got it"})
 //     // res.sendFile(path.join(__dirname,'public/index.html'));
 // });
-
+//
 // app.get('*',(req,res)=>{
 //     res.sendFile(path.join(__dirname,'public/index.html'));
 // });

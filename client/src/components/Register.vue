@@ -86,7 +86,7 @@ export default {
         if (this.$refs.form.validate()) {
           axios({
             method: 'post',
-            url: 'http://localhost:3000/register',
+            url: 'https://linkshockv2.herokuapp.com/register',
             data: {
               name: this.name,
               email: this.email,

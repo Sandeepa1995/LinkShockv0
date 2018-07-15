@@ -244,7 +244,7 @@ export default {
       if (this.$refs.form.validate()) {
           axios({
             method: 'post',
-            url: 'http://localhost:3000/linksetup',
+            url: 'https://linkshockv2.herokuapp.com/linksetup',
             data: {
               link_id: this.new_link_id,
               password: this.new_link_password,
@@ -269,7 +269,7 @@ export default {
     viewShock(shock){
       axios({
         method: 'post',
-        url: 'http://localhost:3000/shockdata',
+        url: 'https://linkshockv2.herokuapp.com/shockdata',
         data:{shock_id:shock },
         headers: {'Content-Type': 'application/json','Authorization':this.token}
       }).then((response) => {
@@ -332,7 +332,7 @@ export default {
       if (this.$refs.addShockForm.validate()) {
         axios({
           method: 'post',
-          url: 'http://localhost:3000/shocksetup',
+          url: 'https://linkshockv2.herokuapp.com/shocksetup',
           data: {
             link_id: this.selectedLink,
             shock_id: this.new_shock_id,
@@ -401,7 +401,7 @@ export default {
   mounted(){
     axios({
       method: 'post',
-      url: 'http://localhost:3000/links',
+      url: 'https://linkshockv2.herokuapp.com/links',
       data:{user_id:this.user.id },
       headers: {'Content-Type': 'application/json','Authorization':this.token}
     }).then((response) => {
