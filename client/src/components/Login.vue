@@ -83,7 +83,7 @@ export default {
             else {
               localStorage.setItem("user",JSON.stringify(response.data.user));
               localStorage.setItem("token",response.data.token);
-              this.$router.push('/');
+              this.$router.push('/home');
               location.reload();
             }
           })

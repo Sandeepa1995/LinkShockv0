@@ -71,25 +71,10 @@ export default {
     return {
       msg: 'Welcome to LinkShock',
 
-//    For bus seat management
     }
   },
   methods:{
-    //For bus seat management
-//    getSeat(x,y){
-//      if (y<=this.l_rows){
-//        return (y-1)*(this.l_seats+this.r_seats)+x;
-//      }
-//      else if (y<=this.r_rows){
-//        return (this.l_rows)*(this.l_seats)+(y-1)*(this.r_seats)+x;
-//      }
-//      else{
-//        return (this.l_rows)*(this.l_seats)+(this.r_rows)*(this.r_seats)+x;
-//      }
-//    },
-//    getvals(){
-//      console.log(this.r_rows,(this.r_rows+1),(this.r_rows+1)*40,(this.r_rows+1)*40 +125)
-//    }
+
   }
 }
 </script>
