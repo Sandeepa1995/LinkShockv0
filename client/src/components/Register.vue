@@ -3,6 +3,12 @@
     <v-alert color="error" icon="warning" transition="scale-transition" value="true" v-show="message.length>0">
       {{message}}
     </v-alert>
+    <v-layout style="background-color: dodgerblue">
+      <v-flex xs12 sm8 offset-sm2  style="margin-bottom: 80px; margin-top: 50px;">
+        <div class="text-xs-center">
+        <v-icon style="font-size: 200px; color: white">
+          person_add</v-icon>
+        </div>
     <v-card style="padding: 50px">
       <h3>{{ title }}</h3>
     <v-form v-model="valid" ref="form">
@@ -49,6 +55,8 @@
       <v-btn @click="clear">clear</v-btn>
     </v-form>
     </v-card>
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 

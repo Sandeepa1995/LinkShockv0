@@ -1,5 +1,11 @@
 <template>
   <div class="login">
+    <v-layout style="background-color: dodgerblue">
+      <v-flex xs12 sm8 offset-sm2  style="margin-bottom: 80px; margin-top: 50px;">
+        <div class="text-xs-center">
+          <v-icon style="font-size: 200px; color: white">
+            lock_open</v-icon>
+        </div>
     <v-card style="padding: 50px">
     <h3>{{ title }}</h3>
     <v-alert color="error" icon="warning" transition="scale-transition" value="true" v-show="message">
@@ -8,7 +14,6 @@
     <v-alert color="success" icon="check_circle" transition="scale-transition" value="true" v-show="passedmessage">
       {{passedmessage}}
     </v-alert>
-
     <v-form v-model="valid" ref="form">
       <v-text-field
         label="E-mail"
@@ -34,6 +39,8 @@
       </v-btn>
     </v-form>
     </v-card>
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 

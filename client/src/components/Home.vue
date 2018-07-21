@@ -1,63 +1,51 @@
 <template>
   <div class="home">
     <template>
-      <!--<v-parallax src="/../../static/bus_img2.jpg" height="1000">-->
-        <v-layout column align-center justify-center style="padding-top: 20%">
-          <h1 class="white--text" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">{{ msg }}</h1>
-          <h4 class="white--text" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Link all your electrical appliances!</h4>
+      <v-parallax
+        dark
+        src="/../../static/home2.jpg"
+      >
+        <v-layout
+          align-center
+          column
+          justify-center
+        >
+          <h1 class="display-2 font-weight-thin mb-3" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; color: dodgerblue">{{ msg }}</h1>
+          <h1 style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; color: darkorange">Link all your electrical appliances!</h1>
         </v-layout>
-        <!--<v-card style="padding: 100px">-->
-          <!--<h2></h2>-->
-          <!--<h4>Be hip, and book a seat for your trip!</h4>-->
-        <!--</v-card>-->
-      <!--</v-parallax>-->
+      </v-parallax>
+      <v-layout style="background-color: dodgerblue">
+        <v-flex xs12 sm8 offset-sm2  style="margin-bottom: 80px; margin-top: 50px;">
+          <v-card  style="padding: 20px;">
+            <h2 class="text-md-center"><strong>Have you ever?</strong></h2>
+            <ul class="text-md-center">
+              <li><h2>Left something on and left home?</h2></li>
+              <br>
+              <li><h2>Wondered how much electricity that you actually conume?</h2></li>
+              <br>
+            </ul>
+            <br>
+            <h1>Well worry no more!</h1>
+            <h2 class="text-md-center">LinkShock is a SmartPlug where you can link to your device through a
+              <strong>Link</strong> which controls the power given to the said device through a <strong>Shock</strong>,
+              and can monitor the power usage.</h2>
+            <br>
+            <h1>Be Smart!</h1>
+            <h1 style="color: dodgerblue">Link it!</h1>
+            <h1 style="color: darkorange">Avoid a Shocking surprises!</h1>
+            <h1>With <strong>LinkShock!</strong></h1>
+            <v-card-actions v-if="!user">
+              <v-flex xs12 sm4 offset-sm4 text-xs-center>
+              <v-btn flat color="blue"  router
+                     to="/register">Register</v-btn>
+              <v-btn flat color="orange"  router
+                     to="/login">Login</v-btn>
+              </v-flex>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout>
     </template>
-
-
-    <!--&lt;!&ndash;Seat selector starts here&ndash;&gt;-->
-    <!--<div class="container" style="border: 10px solid; padding-top: 40px;" v-bind:style="{ width:  ((l_seats+1+r_seats)*40 +95)+ 'px', height:  ((r_rows+1)*40 +125)+ 'px' }">-->
-      <!--<div class="container" v-bind:style="{ width:  ((l_seats+1+r_seats)*40 +35)+ 'px' }">-->
-        <!--<div class="sideRow">-->
-          <!--<div v-for="y in (l_rows)">-->
-            <!--<label class="fullSeats" v-for="x in (l_seats)" style="float: left"-->
-                   <!--v-bind:class="{selectedSeat:checkbox.indexOf(getSeat(x,y)) >= 0,unavailableSeat:booked.indexOf(getSeat(x,y)) >= 0}">-->
-              <!--<input type="checkbox" :value="getSeat(x,y)" v-model="checkbox" v-show="false"-->
-                     <!--:disabled="(booked.indexOf(getSeat(x,y)) >= 0)">-->
-            <!--</label>-->
-            <!--<label class="emptySeats" style="float: left"></label>-->
-            <!--<label class="fullSeats" v-for="x in r_seats" style="float: left"-->
-                   <!--v-bind:class="{selectedSeat:checkbox.indexOf(getSeat(x+l_seats,y)) >= 0,unavailableSeat:booked.indexOf(getSeat(x+l_seats,y)) >= 0}">-->
-              <!--<input type="checkbox" :value="getSeat(x+l_seats,y)" v-model="checkbox" v-show="false"-->
-                     <!--:disabled="(booked.indexOf(getSeat(x+l_seats,y)) >= 0)">-->
-            <!--</label>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<div class="container" v-bind:style="{ width:  ((l_seats+1+r_seats)*40 +35)+ 'px'}">-->
-        <!--<div class="sideRow">-->
-          <!--<div v-for="y in Array.from(new Array((r_rows-l_rows)), (x,i) => i + l_rows+1)">-->
-            <!--<label class="emptySeats" v-for="x in (l_seats+1)" style="float: left"></label>-->
-            <!--<label class="fullSeats" v-for="x in r_seats" style="float: left"-->
-                   <!--v-bind:class="{selectedSeat:checkbox.indexOf(getSeat(x,y)) >= 0,unavailableSeat:booked.indexOf(getSeat(x,y)) >= 0}">-->
-              <!--<input type="checkbox" :value="getSeat(x,y)" v-model="checkbox" v-show="false"-->
-                     <!--:disabled="(booked.indexOf(getSeat(x,y)) >= 0)">-->
-            <!--</label>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<div class="container" v-bind:style="{ width:  ((l_seats+1+r_seats)*40 +35)+ 'px' }">-->
-        <!--<div class="backRow">-->
-          <!--<label v-for="x in (l_seats+1+r_seats)" style="float: left; margin:auto"-->
-                 <!--v-bind:class="{selectedSeat:checkbox.indexOf(getSeat(x,r_rows+1)) >= 0,unavailableSeat:booked.indexOf(getSeat(x,r_rows+1)) >= 0}">-->
-              <!--<input type="checkbox" :value="getSeat(x,r_rows+1)" v-model="checkbox" v-show="false"-->
-                     <!--:disabled="(booked.indexOf(getSeat(x,r_rows+1)) >= 0)">-->
-          <!--</label>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--&lt;!&ndash;Ends here&ndash;&gt;-->
-
-    <!--{{checkbox}}-->
   </div>
 </template>
 
@@ -69,6 +57,7 @@ export default {
   name: 'home',
   data () {
     return {
+      user:JSON.parse(localStorage.getItem("user")),
       msg: 'Welcome to LinkShock',
 
     }

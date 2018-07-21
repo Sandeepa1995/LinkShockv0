@@ -6,7 +6,7 @@
         class="hidden-sm-and-up"></v-toolbar-side-icon>
       <v-icon dark style="padding-left: 20px">wifi_tethering</v-icon>
       <v-toolbar-title>
-        <router-link to="/" tag="span" style="cursor: pointer">{{title}}</router-link>
+        <router-link to="/home" tag="span" style="cursor: pointer">{{title}}</router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-xs-only">
@@ -23,11 +23,12 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-content>
+    <v-content style="background-color: dodgerblue">
       <router-view/>
     </v-content>
-    <v-footer :fixed="fixed" app>
-      <span>Mythic &copy; 2017</span>
+    <v-footer :fixed="fixed" app style="background-color: black; height: 50px">
+      <span style="color: white; margin-right: 20px">CSE Micro-controllers and Applications Project - Batch 2015</span>
+      <span style="color: white">Mythic &copy; 2018</span>
     </v-footer>
   </v-app>
 </template>

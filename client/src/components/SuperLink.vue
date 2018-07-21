@@ -1,10 +1,15 @@
 <template>
   <div class="container">
   <div class="manageBusOwner" >
+    <div class="text-xs-center">
+      <v-icon style="font-size: 200px; color: white">
+        router</v-icon>
+    </div>
+
     <v-alert  color="warning" icon="info" transition="scale-transition" value="true" v-show="message.length>0">
       {{message}}
     </v-alert>
-    <div class="container" style="background-color: white">
+    <div class="container" style="background-color: darkgray">
       <v-alert color="error" icon="warning" transition="scale-transition" value="true" v-show="listmessage.length>0">
         {{listmessage}}
       </v-alert>
@@ -22,9 +27,10 @@
             v-model="search"
           ></v-text-field>
         </v-card-title>
+        <transition name="slide-y-transition">
         <div class="container" v-if="selectedShock">
           <v-layout row justify-center>
-              <v-card style="width: 100%">
+              <v-card style="width: 100%; border-style: solid; border-width: 5px; border-color: dodgerblue">
                 <v-card-text>
                   <h2>Shock details</h2>
                   <h3>{{selectedShock}}</h3>
@@ -48,6 +54,7 @@
               </v-card>
           </v-layout>
         </div>
+        </transition>
         <v-data-table
           v-bind:headers="headers"
           v-bind:items="links"
