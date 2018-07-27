@@ -306,26 +306,38 @@ router.post('/shock',(req,res,next)=> {
                         if (err) throw err;
                         axios({
                             method: 'post',
-                            url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds',
+                            url: 'https://io.adafruit.com/api/v2/Sandeepa1995/groups',
                             data: {
-                                name: req.body.id + '.state',
-                                key: req.body.ada_key + '.state'
+                                name: req.body.ada_key,
                             },
                             headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
                         }).then((response) => {
-                        })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        axios({
-                            method: 'post',
-                            url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds',
-                            data: {
-                                name: req.body.id + '.values',
-                                key: req.body.ada_key + '.values'
-                            },
-                            headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
-                        }).then((response) => {
+                            axios({
+                                method: 'post',
+                                url: 'https://io.adafruit.com/api/v2/Sandeepa1995/groups/'+req.body.ada_key+'feeds',
+                                data: {
+                                    name: 'state',
+                                    key: 'state'
+                                },
+                                headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
+                            }).then((response) => {
+                            })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
+                            axios({
+                                method: 'post',
+                                url: 'https://io.adafruit.com/api/v2/Sandeepa1995/groups/'+req.body.ada_key+'feeds',
+                                data: {
+                                    name: 'values',
+                                    key: 'values'
+                                },
+                                headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
+                            }).then((response) => {
+                            })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
                         })
                             .catch(function (error) {
                                 console.log(error);
