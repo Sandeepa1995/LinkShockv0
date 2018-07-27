@@ -314,7 +314,7 @@ router.post('/shock',(req,res,next)=> {
                         }).then((response) => {
                             axios({
                                 method: 'post',
-                                url: 'https://io.adafruit.com/api/v2/Sandeepa1995/groups/'+req.body.ada_key+'feeds',
+                                url: 'https://io.adafruit.com/api/v2/Sandeepa1995/groups/'+req.body.ada_key+'/feeds',
                                 data: {
                                     name: 'state',
                                     key: 'state'
@@ -327,7 +327,7 @@ router.post('/shock',(req,res,next)=> {
                                 });
                             axios({
                                 method: 'post',
-                                url: 'https://io.adafruit.com/api/v2/Sandeepa1995/groups/'+req.body.ada_key+'feeds',
+                                url: 'https://io.adafruit.com/api/v2/Sandeepa1995/groups/'+req.body.ada_key+'/feeds',
                                 data: {
                                     name: 'values',
                                     key: 'values'
