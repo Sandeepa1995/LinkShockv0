@@ -264,6 +264,61 @@ router.post('/shockdata',(req,res,next)=> {
     });
 });
 
+//Set the timer state
+router.post('/shock_time_state',(req,res,next)=> {
+    jwt.verify(req.headers.authorization, "LinkShockShockingSecret", (err, decoded) => {
+        if (err) {
+            return res.json({success:false,msg:"Unauthorized"});
+        } else {
+            Shock.findOneAndUpdate( {iD: req.body.shock_id}, { can_on: req.body.can_on , can_off: req.body.can_off}, (err, shockFound) =>{
+                if(err){
+                    console.log(err);
+                    res.json({success: false, msg: "Query Error"});
+                } else{
+                    return res.json({success: true, msg : "Shock timed control state changed"});
+                }
+            });
+        }
+    });
+});
+
+//Set the timer state of on
+router.post('/shock_time_on',(req,res,next)=> {
+    jwt.verify(req.headers.authorization, "LinkShockShockingSecret", (err, decoded) => {
+        if (err) {
+            return res.json({success:false,msg:"Unauthorized"});
+        } else {
+            Shock.findOneAndUpdate( {iD: req.body.shock_id}, { on_time: req.body.on_time }, (err, shockFound) =>{
+                if(err){
+                    console.log(err);
+                    res.json({success: false, msg: "Query Error"});
+                } else{
+                    return res.json({success: true, msg : "Shock on time changed"});
+                }
+            });
+        }
+    });
+});
+
+//Set the timer state of on
+router.post('/shock_time_off',(req,res,next)=> {
+    jwt.verify(req.headers.authorization, "LinkShockShockingSecret", (err, decoded) => {
+        if (err) {
+            return res.json({success:false,msg:"Unauthorized"});
+        } else {
+            Shock.findOneAndUpdate( {iD: req.body.shock_id}, { off_time: req.body.off_time }, (err, shockFound) =>{
+                if(err){
+                    console.log(err);
+                    res.json({success: false, msg: "Query Error"});
+                } else{
+                    return res.json({success: true, msg : "Shock off time changed"});
+                }
+            });
+        }
+    });
+});
+
+
 //Get the data of a shock
 router.post('/shockstate',(req,res,next)=> {
     jwt.verify(req.headers.authorization, "LinkShockShockingSecret", (err, decoded) => {

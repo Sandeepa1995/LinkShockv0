@@ -55,7 +55,7 @@
                       <v-switch
                         :label="`Timed turn on is : ${getShockOnnableState()}`"
                         v-model="selectedShockOnControl"
-                        v-on:click="setShockOnnableState"
+                        v-on:change="setShockTimerState()"
                       ></v-switch>
                       <div v-if="selectedShockOnControl">
                         <h2> Turn on at </h2>
@@ -75,7 +75,7 @@
                       <v-switch
                         :label="`Timed turn off is : ${getShockOffableState()}`"
                         v-model="selectedShockOffControl"
-                        v-on:click="setShockOffableState"
+                        v-on:change="setShockTimerState()"
                       ></v-switch>
                       <div v-if="selectedShockOffControl">
                         <h2> Turn off at </h2>
@@ -333,6 +333,10 @@ export default {
           this.selectedShockKey = response.data.shock.ada_key;
           this.selectedShockVals=[];
           this.selectedShockTimes=[];
+          this.timeOn = response.data.shock.on_time;
+          this.timeOff = response.data.shock.off_time;
+          this.selectedShockOnControl = response.data.shock.can_on;
+          this.selectedShockOffControl = response.data.shock.can_off;
           axios({
             method: 'get',
             url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds/'+this.selectedShockKey+'.state/data/',
@@ -449,54 +453,79 @@ export default {
           });
       }
     },
-    setShockOnnableState(){
-      // if (this.selectedShockState!==null) {
-      //   let sendState = "OFF";
-      //   if (this.selectedShockState) {
-      //     sendState = "ON"
-      //   }
-      //   axios({
-      //     method: 'post',
-      //     url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds/' + this.selectedShockKey + '.state/data',
-      //     data: {
-      //       value: sendState
-      //     },
-      //     headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
-      //   }).then((response) => {
-      //   })
-      //     .catch(function (error) {
-      //       console.log(error);
-      //     });
-      // }
-    },
-    setShockOffableState(){
-      // if (this.selectedShockState!==null) {
-      //   let sendState = "OFF";
-      //   if (this.selectedShockState) {
-      //     sendState = "ON"
-      //   }
-      //   axios({
-      //     method: 'post',
-      //     url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds/' + this.selectedShockKey + '.state/data',
-      //     data: {
-      //       value: sendState
-      //     },
-      //     headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
-      //   }).then((response) => {
-      //   })
-      //     .catch(function (error) {
-      //       console.log(error);
-      //     });
-      // }
+    setShockTimerState(){
+      if (this.selectedShockOnControl!==null) {
+        axios({
+          method: 'post',
+          url: 'https://linkshockv2.herokuapp.com/shock_time_state',
+          data: {
+            shock_id: this.selectedShock,
+            can_on : this.selectedShockOnControl,
+            can_off : this.selectedShockOffControl
+          },
+          headers: {'Content-Type': 'application/json', 'Authorization':this.token}
+        }).then((response) => {
+          if(!response.data.success){
+            this.message=response.data.msg;
+          }
+          else {
+            this.message=response.data.msg;
+          }
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
     setShcokOnTime(){
       var offset = new Date().getTimezoneOffset();
-      console.log(hhmmss.toS(this.timeOn));
-      console.log(hhmmss.toS(this.timeOn) - offset);
-      console.log(hhmmss.fromS((hhmmss.toS(this.timeOn) - offset)%1440))
+      // console.log(hhmmss.toS(this.timeOn));
+      // console.log(hhmmss.toS(this.timeOn) - offset);
+      // console.log(hhmmss.fromS((hhmmss.toS(this.timeOn) - offset)%1440))
+      axios({
+        method: 'post',
+        url: 'https://linkshockv2.herokuapp.com/shock_time_on',
+        data: {
+          shock_id: this.selectedShock,
+          on_time : hhmmss.fromS((hhmmss.toS(this.timeOn) - offset)%1440)
+        },
+        headers: {'Content-Type': 'application/json', 'Authorization':this.token}
+      }).then((response) => {
+        if(!response.data.success){
+          this.message=response.data.msg;
+        }
+        else {
+          this.message=response.data.msg;
+        }
+      })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
     setShcokOffTime(){
-      console.log(this.timeOff)
+      var offset = new Date().getTimezoneOffset();
+      // console.log(hhmmss.toS(this.timeOn));
+      // console.log(hhmmss.toS(this.timeOn) - offset);
+      // console.log(hhmmss.fromS((hhmmss.toS(this.timeOn) - offset)%1440))
+      axios({
+        method: 'post',
+        url: 'https://linkshockv2.herokuapp.com/shock_time_off',
+        data: {
+          shock_id: this.selectedShock,
+          off_time : hhmmss.fromS((hhmmss.toS(this.timeOff) - offset)%1440)
+        },
+        headers: {'Content-Type': 'application/json', 'Authorization':this.token}
+      }).then((response) => {
+        if(!response.data.success){
+          this.message=response.data.msg;
+        }
+        else {
+          this.message=response.data.msg;
+        }
+      })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
     closeForm(){
       this.editOpers=false;
