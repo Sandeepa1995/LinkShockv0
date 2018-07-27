@@ -123,7 +123,7 @@ var j1 = schedule.scheduleJob('30 * * * *', function(){
         })
     });
 });
-var j2 = schedule.scheduleJob('0 * * * *', function(){
+var j2 = schedule.scheduleJob('*/2 * * * *', function(){
     var offset = new Date().getTimezoneOffset();
     var timeNow = mod(hhmmss.toS(moment(new Date()).format('HH:mm')) + offset, 1440);
     Shock.find({}, function(err, shocks) {
