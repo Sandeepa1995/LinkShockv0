@@ -18,10 +18,10 @@
         label="AdaFruit Feed Key"
         v-model="ada_key"
       ></v-text-field>
-      <v-text-field
-        label="AdaFruit Data X-AIO-Key"
-        v-model="ada_aio"
-      ></v-text-field>
+      <!--<v-text-field-->
+        <!--label="AdaFruit Data X-AIO-Key"-->
+        <!--v-model="ada_aio"-->
+      <!--&gt;</v-text-field>-->
       <v-btn
         @click="submit"
       >
@@ -54,8 +54,7 @@ export default {
               id: this.shock_id,
               admin_pass: this.admin_pass,
               password: this.shock_pass,
-              ada_key: this.ada_key,
-              ada_aio: this.ada_aio
+              ada_key: this.ada_key
             },
             headers: {'Content-Type': 'application/json'}
           }).then((response) => {

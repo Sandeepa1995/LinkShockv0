@@ -6,7 +6,12 @@ var Schema = mongoose.Schema;
 var shockSchema = new Schema({
     iD: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    ada_key: { type: String, required: true }
+    ada_key: { type: String, required: true },
+    on_time: { type: String, required:true},
+    can_on: { type: Boolean, required: true },
+    off_time: { type: String, required: true },
+    can_off: { type: Boolean, required: true },
+
 });
 
 var Shock = mongoose.model('Shock', shockSchema);

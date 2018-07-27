@@ -40,7 +40,7 @@
                       <v-switch
                         :label="`Shock is : ${getShockState()}`"
                         v-model="selectedShockState"
-                        :click="setShockState()"
+                        v-on:change="setShockState()"
                       ></v-switch>
                     </v-flex>
                     <v-flex xs5></v-flex>
@@ -50,6 +50,48 @@
                          v-on:click="viewShock(selectedShock)"
                          dark style="width: 50%; margin-left: auto; margin-right: auto">Refresh</v-btn>
                   <line-chart :data="shockFormattedData"></line-chart>
+                  <v-layout row wrap>
+                    <v-flex md12 lg6>
+                      <v-switch
+                        :label="`Timed turn on is : ${getShockOnnableState()}`"
+                        v-model="selectedShockOnControl"
+                        v-on:click="setShockOnnableState"
+                      ></v-switch>
+                      <div v-if="selectedShockOnControl">
+                        <h2> Turn on at </h2>
+                        <v-time-picker
+                          v-model="timeOn"
+                          :allowed-minutes="allowedMinutes"
+                          class="mt-3"
+                          format="24hr"
+                        ></v-time-picker>
+                        <v-btn block
+                               color="info"
+                               v-on:click="setShcokOnTime()"
+                               dark>Set the timed turn on time</v-btn>
+                      </div>
+                    </v-flex>
+                    <v-flex md12 lg6>
+                      <v-switch
+                        :label="`Timed turn off is : ${getShockOffableState()}`"
+                        v-model="selectedShockOffControl"
+                        v-on:click="setShockOffableState"
+                      ></v-switch>
+                      <div v-if="selectedShockOffControl">
+                        <h2> Turn off at </h2>
+                        <v-time-picker
+                          v-model="timeOff"
+                          :allowed-minutes="allowedMinutes"
+                          class="mt-3"
+                          format="24hr"
+                        ></v-time-picker>
+                        <v-btn block
+                               color="info"
+                               v-on:click="setShcokOffTime()"
+                               dark>Set the timed turn off time</v-btn>
+                      </div>
+                    </v-flex>
+                  </v-layout>
                 </v-card-text>
               </v-card>
           </v-layout>
@@ -185,9 +227,10 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import axios from 'axios';
   import VTextField from "vuetify/es5/components/VTextField/VTextField";
   import LineChart from './LineChart';
+  import hhmmss from 'hh-mm-ss';
 export default {
 
   components: {VTextField, LineChart},
@@ -237,10 +280,15 @@ export default {
     selectedShockTimes:[],
     selectedShockState:null,
     selectedShockKey:'',
+    selectedShockOnControl:true,
+    selectedShockOffControl:true,
 
     tmp: '',
     search: '',
     pagination: {},
+
+    timeOn: '00:00',
+    timeOff: '00:00'
 
   }),
   computed: {
@@ -367,6 +415,20 @@ export default {
         return "OFF"
       }
     },
+    getShockOnnableState(){
+      if (this.selectedShockOnControl){
+        return "ON"
+      }else {
+        return "OFF"
+      }
+    },
+    getShockOffableState(){
+      if (this.selectedShockOffControl){
+        return "ON"
+      }else {
+        return "OFF"
+      }
+    },
     setShockState(){
       if (this.selectedShockState!==null) {
         let sendState = "OFF";
@@ -387,6 +449,55 @@ export default {
           });
       }
     },
+    setShockOnnableState(){
+      // if (this.selectedShockState!==null) {
+      //   let sendState = "OFF";
+      //   if (this.selectedShockState) {
+      //     sendState = "ON"
+      //   }
+      //   axios({
+      //     method: 'post',
+      //     url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds/' + this.selectedShockKey + '.state/data',
+      //     data: {
+      //       value: sendState
+      //     },
+      //     headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
+      //   }).then((response) => {
+      //   })
+      //     .catch(function (error) {
+      //       console.log(error);
+      //     });
+      // }
+    },
+    setShockOffableState(){
+      // if (this.selectedShockState!==null) {
+      //   let sendState = "OFF";
+      //   if (this.selectedShockState) {
+      //     sendState = "ON"
+      //   }
+      //   axios({
+      //     method: 'post',
+      //     url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds/' + this.selectedShockKey + '.state/data',
+      //     data: {
+      //       value: sendState
+      //     },
+      //     headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
+      //   }).then((response) => {
+      //   })
+      //     .catch(function (error) {
+      //       console.log(error);
+      //     });
+      // }
+    },
+    setShcokOnTime(){
+      var offset = new Date().getTimezoneOffset();
+      console.log(hhmmss.toS(this.timeOn));
+      console.log(hhmmss.toS(this.timeOn) - offset);
+      console.log(hhmmss.fromS((hhmmss.toS(this.timeOn) - offset)%1440))
+    },
+    setShcokOffTime(){
+      console.log(this.timeOff)
+    },
     closeForm(){
       this.editOpers=false;
       this.editing=false;
@@ -403,7 +514,8 @@ export default {
     clearShockForm(){
       this.new_shock_id="";
       this.new_shock_password= "";
-    }
+    },
+    allowedMinutes: v => (v%30 === 0),
   },
   mounted(){
     axios({

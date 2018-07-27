@@ -7,6 +7,7 @@ const User = require('../models/user');
 const Link = require('../models/link');
 const Shock = require('../models/shock');
 const async = require("async");
+const axios = require('axios');
 
 //Register
 router.post('/register',(req,res,next)=> {
@@ -250,7 +251,11 @@ router.post('/shockdata',(req,res,next)=> {
                 } else{
                     let shock_returned = {
                         iD: shockFound.iD,
-                        ada_key: shockFound.ada_key
+                        ada_key: shockFound.ada_key,
+                        on_time: shockFound.on_time,
+                        off_time: shockFound.off_time,
+                        can_on: shockFound.can_on,
+                        can_off: shockFound.can_off
                     };
                     return res.json({success: true, shock: shock_returned});
                 }
@@ -290,11 +295,41 @@ router.post('/shock',(req,res,next)=> {
                     var new_shock = new Shock({
                         iD:req.body.id,
                         password: hash,
-                        ada_key:req.body.ada_key
+                        ada_key:req.body.ada_key,
+                        can_on: false,
+                        can_off:false,
+                        on_time: '00:00',
+                        off_time: '00:00'
                     });
 
                     new_shock.save((err) => {
                         if (err) throw err;
+                        // axios({
+                        //     method: 'post',
+                        //     url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds',
+                        //     data: {
+                        //         name: req.body.id + '.state',
+                        //         key: req.body.ada_key + '.state'
+                        //     },
+                        //     headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
+                        // }).then((response) => {
+                        // })
+                        //     .catch(function (error) {
+                        //         console.log(error);
+                        //     });
+                        // axios({
+                        //     method: 'post',
+                        //     url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds',
+                        //     data: {
+                        //         name: req.body.id + '.values',
+                        //         key: req.body.ada_key + '.values'
+                        //     },
+                        //     headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
+                        // }).then((response) => {
+                        // })
+                        //     .catch(function (error) {
+                        //         console.log(error);
+                        //     });
                         return res.json({success:true,msg:"Shock successfully added to the system."});
                     });
                 });

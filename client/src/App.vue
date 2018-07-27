@@ -73,7 +73,7 @@ export default {
       localStorage.setItem("user",null);
       localStorage.clear();
 //        localStorage.setItem("message","User logged out");
-      this.$router.push('/');
+      this.$router.push('/home');
       location.reload();
     }
   }
