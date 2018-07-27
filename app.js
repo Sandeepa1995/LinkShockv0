@@ -130,6 +130,12 @@ var j2 = schedule.scheduleJob('*/2 * * * *', function(){
         if (err) throw err;
 
         shocks.forEach(shock =>{
+            console.log(shock.iD);
+            console.log(shock.can_on);
+            console.log(hhmmss.toS(shock.on_time));
+            console.log(timeNow);
+            console.log((Math.abs(hhmmss.toS(shock.on_time)-timeNow)));
+            console.log('https://io.adafruit.com/api/v2/Sandeepa1995/feeds/' + shock.ada_key + '.state/data');
             if (shock.can_on && (Math.abs(hhmmss.toS(shock.on_time)-timeNow))<10){
                 axios({
                     method: 'post',
