@@ -4,8 +4,12 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const serveStatic = require('serve-static')
-
+const schedule = require('node-schedule');
+const Shock = require('./models/shock');
+const axios = require('axios');
+const moment = require('moment');
 const mongoose = require('mongoose');
+const hhmmss = require('hh-mm-ss');
 
 const app=express();
 
@@ -69,5 +73,91 @@ app.get('*', function (req, res) {
 
 //Start Server
 app.listen(port,()=>{
+    // var offset = new Date().getTimezoneOffset();
     console.log("Server started on "+port);
+    // console.log(hhmmss.fromS(mod(hhmmss.toS(moment(new Date()).format('HH:mm')) + offset, 1440)));
+});
+
+function mod(n, p)
+{
+    if ( n < 0 )
+        n = p - Math.abs(n) % p;
+    return n % p;
+}
+
+var j1 = schedule.scheduleJob('30 * * * *', function(){
+    var offset = new Date().getTimezoneOffset();
+    var timeNow = mod(hhmmss.toS(moment(new Date()).format('HH:mm')) + offset, 1440);
+    Shock.find({}, function(err, shocks) {
+        if (err) throw err;
+
+        shocks.forEach(shock =>{
+            if (shock.can_on && (Math.abs(hhmmss.toS(shock.on_time)-timeNow))<10){
+                axios({
+                    method: 'post',
+                    url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds/' + shock.ada_key + '.state/data',
+                    data: {
+                        value: 'ON'
+                    },
+                    headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
+                }).then((response) => {
+                })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+            if (shock.can_off && (Math.abs(hhmmss.toS(shock.off_time)-timeNow))<10){
+                axios({
+                    method: 'post',
+                    url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds/' + shock.ada_key + '.state/data',
+                    data: {
+                        value: 'OFF'
+                    },
+                    headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
+                }).then((response) => {
+                })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        })
+    });
+});
+var j2 = schedule.scheduleJob('0 * * * *', function(){
+    var offset = new Date().getTimezoneOffset();
+    var timeNow = mod(hhmmss.toS(moment(new Date()).format('HH:mm')) + offset, 1440);
+    Shock.find({}, function(err, shocks) {
+        if (err) throw err;
+
+        shocks.forEach(shock =>{
+            if (shock.can_on && (Math.abs(hhmmss.toS(shock.on_time)-timeNow))<10){
+                axios({
+                    method: 'post',
+                    url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds/' + shock.ada_key + '.state/data',
+                    data: {
+                        value: 'ON'
+                    },
+                    headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
+                }).then((response) => {
+                })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+            if (shock.can_off && (Math.abs(hhmmss.toS(shock.off_time)-timeNow))<10){
+                axios({
+                    method: 'post',
+                    url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds/' + shock.ada_key + '.state/data',
+                    data: {
+                        value: 'OFF'
+                    },
+                    headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
+                }).then((response) => {
+                })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        })
+    });
 });

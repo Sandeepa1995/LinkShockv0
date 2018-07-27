@@ -329,12 +329,13 @@ export default {
         headers: {'Content-Type': 'application/json','Authorization':this.token}
       }).then((response) => {
         if(response.data.success){
+          var offset = new Date().getTimezoneOffset();
           this.selectedShock = response.data.shock.iD;
           this.selectedShockKey = response.data.shock.ada_key;
           this.selectedShockVals=[];
           this.selectedShockTimes=[];
-          this.timeOn = response.data.shock.on_time;
-          this.timeOff = response.data.shock.off_time;
+          this.timeOn = hhmmss.fromS(this.mod((hhmmss.toS(response.data.shock.on_time) + offset),1440));
+          this.timeOff = hhmmss.fromS(this.mod((hhmmss.toS(response.data.shock.off_time) + offset),1440));
           this.selectedShockOnControl = response.data.shock.can_on;
           this.selectedShockOffControl = response.data.shock.can_off;
           axios({
@@ -487,7 +488,7 @@ export default {
         url: 'https://linkshockv2.herokuapp.com/shock_time_on',
         data: {
           shock_id: this.selectedShock,
-          on_time : hhmmss.fromS((hhmmss.toS(this.timeOn) - offset)%1440)
+          on_time : hhmmss.fromS(this.mod((hhmmss.toS(this.timeOn) - offset),1440))
         },
         headers: {'Content-Type': 'application/json', 'Authorization':this.token}
       }).then((response) => {
@@ -512,7 +513,7 @@ export default {
         url: 'https://linkshockv2.herokuapp.com/shock_time_off',
         data: {
           shock_id: this.selectedShock,
-          off_time : hhmmss.fromS((hhmmss.toS(this.timeOff) - offset)%1440)
+          off_time : hhmmss.fromS(this.mod((hhmmss.toS(this.timeOff) - offset),1440))
         },
         headers: {'Content-Type': 'application/json', 'Authorization':this.token}
       }).then((response) => {
@@ -545,6 +546,13 @@ export default {
       this.new_shock_password= "";
     },
     allowedMinutes: v => (v%30 === 0),
+    mod(n, p)
+    {
+      if ( n < 0 )
+        n = p - Math.abs(n) % p;
+
+      return n % p;
+    }
   },
   mounted(){
     axios({
