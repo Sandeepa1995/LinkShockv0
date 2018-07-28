@@ -344,7 +344,7 @@ export default {
             headers: {'Content-Type': 'application/json'}
           }).then((respStae)=> {
             if(respStae.data) {
-              if (respStae.data[0].value === "ON") {
+              if (respStae.data[0].value === "1") {
                 this.selectedShockState = true;
               }
               else {
@@ -436,9 +436,9 @@ export default {
     },
     setShockState(){
       if (this.selectedShockState!==null) {
-        let sendState = "OFF";
+        let sendState = 0;
         if (this.selectedShockState) {
-          sendState = "ON"
+          sendState = 1
         }
         axios({
           method: 'post',

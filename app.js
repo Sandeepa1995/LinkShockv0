@@ -97,7 +97,7 @@ var j1 = schedule.scheduleJob('30 * * * *', function(){
                     method: 'post',
                     url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds/' + shock.ada_key + '.state/data',
                     data: {
-                        value: 'ON'
+                        value: 1
                     },
                     headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
                 }).then((response) => {
@@ -111,7 +111,7 @@ var j1 = schedule.scheduleJob('30 * * * *', function(){
                     method: 'post',
                     url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds/' + shock.ada_key + '.state/data',
                     data: {
-                        value: 'OFF'
+                        value: 0
                     },
                     headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
                 }).then((response) => {
@@ -141,7 +141,7 @@ var j2 = schedule.scheduleJob('0 * * * *', function(){
                     method: 'post',
                     url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds/' + shock.ada_key + '.state/data',
                     data: {
-                        value: 'ON'
+                        value: 1
                     },
                     headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
                 }).then((response) => {
@@ -155,7 +155,7 @@ var j2 = schedule.scheduleJob('0 * * * *', function(){
                     method: 'post',
                     url: 'https://io.adafruit.com/api/v2/Sandeepa1995/feeds/' + shock.ada_key + '.state/data',
                     data: {
-                        value: 'OFF'
+                        value: 0
                     },
                     headers: {'Content-Type': 'application/json', 'X-AIO-Key': '547b680e533849f9a9a8f096d6ae1e9c'}
                 }).then((response) => {
